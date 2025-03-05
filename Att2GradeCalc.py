@@ -48,9 +48,14 @@ def extract_text_from_scanned_pdf(pdf_path):
 def extract_course_title(text):
     """Extract the course title from the OCR text, handling OCR errors."""
     lines = text.splitlines()
+    print("Extracting course title from the following lines:")
     for line in lines:
+        print(f"Processing line: {line}")
         if re.match(r'^[A-Z]{2,}-\d{3}-\d{2}', line):  # Matches course-like format (e.g., MIS-353-01)
-            return re.sub(r'[^A-Za-z0-9\- ]', '', line.strip())  # Remove OCR artifacts
+            title = re.sub(r'[^A-Za-z0-9\- ]', '', line.strip())  # Remove OCR artifacts
+            print(f"Found course title: {title}")
+            return title
+    print("No valid course title found.")
     return "Unknown Course"
 
 def extract_assignments_and_grades(text):
