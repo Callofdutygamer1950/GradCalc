@@ -31,14 +31,19 @@ def extract_text_from_scanned_pdf(pdf_path):
     """Extract text from a scanned PDF using OCR."""
     text = ""
     pdf_document = fitz.open(pdf_path)
-    
+
     for page_num in range(len(pdf_document)):
         page = pdf_document[page_num]
-        pix = page.get_pixmap()
+        
+        # Reduce resolution to lower memory usage
+        pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))  # Adjust scaling factor
         img = Image.open(io.BytesIO(pix.tobytes("png")))
+
+        # Run OCR
         text += pytesseract.image_to_string(img) + "\n"
-    
+
     return text
+
 
 def extract_course_title(text):
     """Extract the course title from the OCR text, handling OCR errors."""
