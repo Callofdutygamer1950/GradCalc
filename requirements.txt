@@ -1,0 +1,8 @@
+Flask
+gunicorn
+pytesseract
+pandas
+PyMuPDF
+Pillow
+waitress
+werkzeug
